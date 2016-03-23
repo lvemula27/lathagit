@@ -1,0 +1,552 @@
+package  user;
+
+import java.sql.*;
+import java.util.*;
+
+public class MyBean
+{
+  public String uname="";
+  public String pswd="";
+  public String username="";
+  public String accno="";
+  public String pin="";
+  
+   public String cust_name="";
+   public String password="";
+   public String email="";
+   public String phone="";
+   public String acc_type="";
+   public float balance;
+   
+   public float damnt[]= new float[25];
+   public String ddate[]=new String[25];
+   public float tamnt[]=new float[25];
+   public String facc[]=new String[25];
+   public String tacc[]=new String[25];
+   public String tdate[]=new String[25];
+   
+  public MyBean(){}
+  
+  
+  public void setUname(String uname)
+  {
+     this.uname=uname;
+  }
+  public String getUname()
+  {
+     return uname; 
+  }
+  
+  public void setPswd(String pswd)
+  {
+     this.pswd=pswd;
+  }
+  public String getPswd()
+  {
+     return pswd;
+  }
+  
+  public void setAccno(String accno)
+  {
+     this.accno=accno;
+  }
+  public String getAccno()
+  {
+     return accno; 
+  }
+  
+  public void setPin(String pin)
+  {
+     this.pin=pin;
+  }
+  
+  public String getPin()
+  {
+     return pin; 
+  }
+  
+  
+  public void setCust_name(String cust_name)
+  {
+     this.cust_name=cust_name;
+  }
+  public String getCust_name()
+  {
+     return cust_name; 
+  }
+  
+  public void setUsername(String username)
+  {
+     this.username=username;
+  }
+  public String getUsername()
+  {
+     return username; 
+  }
+  
+  
+  public void setPassword(String password)
+  {
+     this.password=password;
+  }
+  public String getPassword()
+  {
+     return password; 
+  }
+  
+  
+  public void setEmail(String email)
+  {
+     this.email=email;
+  }
+  public String getEmail()
+  {
+     return email; 
+  }
+  
+  
+  public void setPhone(String phone)
+  {
+     this.phone=phone;
+  }
+  public String getPhone()
+  {
+     return phone; 
+  }
+  
+  public void setAcc_type(String acc_type)
+  {
+     this.acc_type=acc_type;
+  }
+  public String getAcc_type()
+  {
+     return acc_type; 
+  }
+  
+   public void setBalance(float balance)
+  {
+     this.balance=balance;
+  }
+  public float getBalance()
+  {
+     return balance; 
+  }
+  
+  
+ /* public void setFrom_accno(String facc)
+  {
+     this.facc[0]=facc;								
+  } */
+  public String getFrom_accno(int j)
+  {
+     return facc[j]; 
+  }
+  
+ /* public void setTo_accno(String tacc)
+  {
+     this.tacc=tacc;								
+  } */
+  public String getTo_accno(int j)
+  {
+     return tacc[j]; 
+  }
+  
+  /* public void setTdate(String tdate)
+  {
+     this.tdate=tdate;								
+  } */
+  public String getTdate(int j)
+  {
+     return tdate[j]; 
+  }
+  
+  /* public void setTamnt(float tamnt)
+  {
+     this.tamnt=tamnt;								
+  } */
+  public float getTamnt(int j)
+  {
+     return tamnt[j]; 
+  }
+  
+  /*public void setDamnt(float damnt)
+  {
+     this.damnt=damnt;								
+  } */
+  public float getDamnt(int j)
+  {
+     return damnt[j]; 
+  }
+  
+  /* public void setDdate(String ddate)
+  {
+     this.ddate=ddate;								
+  } */
+  public String getDdate(int j)
+  {
+     return ddate[j]; 
+  }
+
+    public  boolean isValid()
+	 {
+	     boolean found=false;
+	 try{
+          String query="select * from customers where username='"+uname+"' and password='"+pswd+"'";
+          Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+	      Connection con= DriverManager.getConnection("jdbc:odbc:bankaccdsn","","");
+	      Statement st=con.createStatement();
+       	  ResultSet rs=st.executeQuery(query);
+      	  if(rs.next()){found=true;}
+      	  else{found=false;}
+		  rs.close();
+		  con.close();
+		 
+	    }
+       catch(Exception e){return false;}
+	    return found;
+	   } 
+ 
+       public void getEverything()
+	   {
+	     try{
+          String query="select * from customers where username='"+uname+"' and password='"+pswd+"'";
+          Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+	      Connection con= DriverManager.getConnection("jdbc:odbc:bankaccdsn","","");
+	      Statement st=con.createStatement();
+       	  ResultSet rs=st.executeQuery(query);
+      	  while(rs.next())
+		  {
+		    cust_name=rs.getString("cust_name");
+			accno=rs.getString("accno");
+			username=rs.getString("username");
+			email=rs.getString("email");
+			phone=rs.getString("phone");
+			acc_type=rs.getString("acc_type");
+		  }
+		  rs.close();
+		  
+		  ResultSet rs2=st.executeQuery("select balance from bankdb where accno='"+accno+"'");
+		  while(rs2.next())
+		  {
+		    balance=rs2.getFloat("balance");
+		  }
+		  rs2.close();
+		  con.close();
+		 
+	    }
+       catch(Exception e){}
+		 
+	   }
+	   
+	   public String getCustName()
+	   {
+	     try{
+          String query="select * from customers where username='"+uname+"' and password='"+pswd+"'";
+          Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+	      Connection con= DriverManager.getConnection("jdbc:odbc:bankaccdsn","","");
+	      Statement st=con.createStatement();
+       	  ResultSet rs=st.executeQuery(query);
+      	  while(rs.next()){this.cust_name=rs.getString("cust_name");}
+		  rs.close();
+		  con.close();
+		 return cust_name;
+	    }
+       catch(Exception e){ return null;}
+	   }
+	   
+	   
+	   
+	   public  boolean isRegValid()
+	 {
+	     boolean found=false;
+	 try{
+          String query="select * from bankdb where accno='"+accno+"' and pin='"+pin+"'";
+          Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+	      Connection con= DriverManager.getConnection("jdbc:odbc:bankaccdsn","","");
+	      Statement st=con.createStatement();
+       	  ResultSet rs=st.executeQuery(query);
+      	  if(rs.next())
+		  {
+		    cust_name=rs.getString("cust_name");
+			balance=rs.getFloat("balance");
+			acc_type=rs.getString("acc_type");
+		    found=true;
+		  }
+      	  else{found=false;}
+		  rs.close();
+		  con.close();
+		 
+	    }
+       catch(Exception e){}
+	    return found;
+	   }
+	   
+	   public  boolean isNewOne(String accno)
+	   {
+	      try{
+		      String query="select * from customers where accno='"+accno+"'";
+			  Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+	          Connection con= DriverManager.getConnection("jdbc:odbc:bankaccdsn","","");
+	          Statement st=con.createStatement();
+       	      ResultSet rs = st.executeQuery(query);
+			  if(rs.next()){return false;}
+			  else {return true;}
+		   }catch(Exception e){return true;}
+	   }
+	   
+	   public boolean regCust()
+	   {
+	      try{
+		      String query="insert into customers values('"+cust_name+"','"+accno+"','"+username+"','"+password+"','"+email+"','"+phone+"','"+acc_type+"')" ;
+			  Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+	          Connection con= DriverManager.getConnection("jdbc:odbc:bankaccdsn","","");
+	          Statement st=con.createStatement();
+       	      int i =st.executeUpdate(query);
+			  if(i==1){return true;}
+			  else {return false;}
+		   }catch(Exception e){return false;}
+	   }
+	   
+	   public boolean checkReg( String user_name)
+	   {
+	      try{
+		      String query="select * from customers where username='"+user_name+"'";
+			  Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+	          Connection con= DriverManager.getConnection("jdbc:odbc:bankaccdsn","","");
+	          Statement st=con.createStatement();
+       	      ResultSet rs = st.executeQuery(query);
+			  if(rs.next()){return false;}
+			  else {return true;}
+		   }catch(Exception e){return true;}
+	   }
+	   
+	   public boolean deactivateAcc(String uname)
+	   {
+	     try{
+		      String query="delete from customers where username='"+uname+"'";
+			  Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+	          Connection con= DriverManager.getConnection("jdbc:odbc:bankaccdsn","","");
+	          Statement st=con.createStatement();
+       	      int i =st.executeUpdate(query);
+			  if(i==1){return true;}
+			  else {return false;}
+		   }catch(Exception e){return false;}
+	   }
+	   
+	   public boolean isPswdCrt(String accno,String pswd)
+	   {
+	      try{
+		      String query="select * from customers where accno='"+accno+"' and password='"+pswd+"'";
+			  Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+	          Connection con= DriverManager.getConnection("jdbc:odbc:bankaccdsn","","");
+	          Statement st=con.createStatement();
+       	      ResultSet rs = st.executeQuery(query);
+			  if(rs.next()){return true;}
+			  else {return false;}
+		   }catch(Exception e){return false;}
+	   }
+	   
+	   public boolean changePassword(String accno,String pswd)
+	   {
+	      try{
+		      String query="update customers set password='"+pswd+"' where accno='"+accno+"'";
+			  Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+	          Connection con= DriverManager.getConnection("jdbc:odbc:bankaccdsn","","");
+	          Statement st=con.createStatement();
+       	      int i =st.executeUpdate(query);
+			  if(i==1){return true;}
+			  else {return false;}
+		   }catch(Exception e){return false;}
+	   }
+	   
+	   public boolean isPswdMatch(String accno,String p2)
+	   {
+	      try{
+		      String query="select * from customers where password='"+p2+"' and accno='"+accno+"'";
+			  Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+	          Connection con= DriverManager.getConnection("jdbc:odbc:bankaccdsn","","");
+	          Statement st=con.createStatement();
+       	      ResultSet rs = st.executeQuery(query);
+			  if(rs.next()){return true;}
+			  else {return false;}
+		   }catch(Exception e){return true;}
+	   }
+	   
+	   public boolean updateDB()
+	   {
+	     try{
+		      String query="update customers set cust_name='"+cust_name+"' , email='"+email+"' , phone='"+phone+"' where accno='"+accno+"'";
+			  Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+	          Connection con= DriverManager.getConnection("jdbc:odbc:bankaccdsn","","");
+	          Statement st=con.createStatement();
+       	      int i =st.executeUpdate(query);
+			  if(i==1){return true;}
+			  else {return false;}
+		   }catch(Exception e){return false;}
+	   }
+	   
+	   public boolean deposit(String accno,float amnt)
+	   {
+	      try{
+		      String query="update bankdb set balance="+amnt+"+balance where accno='"+accno+"'";
+			  Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+	          Connection con= DriverManager.getConnection("jdbc:odbc:bankaccdsn","","");
+	          Statement st=con.createStatement();
+       	      int i =st.executeUpdate(query);
+			  if(i==1){
+			        ResultSet rs=st.executeQuery("select balance from bankdb where accno='"+accno+"'");
+					if(rs.next())
+			        balance=rs.getFloat(1);
+					rs.close();
+			        return true;
+			  }
+			  else {return false;}
+		   }catch(Exception e){return false;}
+	   }
+	   
+	   public void updateDeposits(String accno, float amnt)
+	   {
+	     try{
+		      String query="insert into deposits values('"+accno+"','"+amnt+"',NOW)";
+			  Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+	          Connection con= DriverManager.getConnection("jdbc:odbc:bankaccdsn","","");
+	          Statement st=con.createStatement();
+       	      int i =st.executeUpdate(query);
+			  
+		   }catch(Exception e){}
+	   }
+	   
+	   public boolean transfer(String accno, float amnt, String taccno)
+	   {
+	     String a2=taccno;
+		 float amt=amnt;
+		 String a1=accno;
+		  
+		  if(deposit(a2,amt))
+		  {
+		    try{
+		      String query="update bankdb set balance=balance-"+amnt+" where accno='"+accno+"'";
+			  Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+	          Connection con= DriverManager.getConnection("jdbc:odbc:bankaccdsn","","");
+	          Statement st=con.createStatement();
+       	      int i =st.executeUpdate(query);
+			  if(i==1){
+			        ResultSet rs=st.executeQuery("select balance from bankdb where accno='"+accno+"'");
+					if(rs.next())
+			        balance=rs.getFloat(1);
+					rs.close();
+			        return true;
+			  }
+			  else {return false;}
+		      }catch(Exception e){return false;}
+		  }
+		  else {return false;}
+	   }
+	   
+	   public void updateTransactions(String accno, float amnt, String taccno)
+	   {
+	     try{
+		      String query="insert into transactions values('"+accno+"','"+taccno+"',NOW,"+amnt+")";
+			  Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+	          Connection con= DriverManager.getConnection("jdbc:odbc:bankaccdsn","","");
+	          Statement st=con.createStatement();
+       	      int i =st.executeUpdate(query);
+			  
+		   }catch(Exception e){}
+	   }
+	   
+	   
+	   public void getTransactionDetails(String accno)
+	   {
+	     try{
+		      String query="select * from transactions where from_accno='"+accno+"' or to_accno='"+accno+"' ";
+			  String query2="select * from deposits where accno='"+accno+"'";
+			  Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+	          Connection con= DriverManager.getConnection("jdbc:odbc:bankaccdsn","","");
+	          Statement st=con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+			  ResultSet rs=st.executeQuery(query);
+			  ResultSetMetaData rsmd=rs.getMetaData();
+			  int noc=rsmd.getColumnCount();
+			  int i=1;
+			  if(rs.last()&&i<=25)
+			  {
+			    facc[0]=rs.getString(1);
+				tacc[0]=rs.getString(2);
+				tdate[0]=rs.getDate(3).toString();
+				tamnt[0]=rs.getFloat(4);
+			  }
+			  while(rs.previous()&&i<=25)
+			  {
+			    facc[i]=rs.getString(1);
+				tacc[i]=rs.getString(2);
+				tdate[i]=rs.getDate(3).toString();
+				tamnt[i]=rs.getFloat(4);
+				i++;
+			  }
+			  rs.close();
+			  
+			  i=1;
+			  ResultSet drs=st.executeQuery(query2);
+			  if(rs.last())
+			  {
+			    damnt[0]=drs.getFloat(2);
+				ddate[0]=drs.getDate(3).toString();
+			  }
+			  while(rs.previous()&&i<=25)
+			  {
+			    damnt[i]=drs.getFloat(2);
+				ddate[i]=drs.getDate(3).toString();
+				i++;
+			  }
+              
+	        }
+       catch(Exception e){}
+	   }
+	   
+	   
+	    public boolean isValidAmnt(String accno, float amt)
+	    {   
+		   float b2=amt;
+		   float b1=0;
+	      try{
+		      String query="select balance from bankdb where accno='"+accno+"'";
+			  Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+	          Connection con= DriverManager.getConnection("jdbc:odbc:bankaccdsn","","");
+	          Statement st=con.createStatement();
+       	      ResultSet rs=st.executeQuery(query);
+			  while(rs.next())
+			  {b1=rs.getFloat("balance");}
+			  
+			  if(b1>b2)
+			  return true;
+			  else
+			  return false;
+			  
+		   }catch(Exception e){return false;}
+	    }
+		 
+	   }
+	  /* public void getBankDb()
+	   {
+	      try{
+		      Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+	          Connection con= DriverManager.getConnection("jdbc:odbc:bankaccdsn","","");
+	          Statement st=con.createStatement();
+			  ResultSet rs=st.executeQuery("select * from bankdb where accno='"+accno+"' and pin='"+pin+"'");
+			  
+		  }catch(Exception e){}
+	   } */
+	   
+
+
+
+
+
+
+
+
+
+
+
+
+
