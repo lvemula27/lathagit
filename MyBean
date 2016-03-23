@@ -2,7 +2,7 @@ package  user;
 
 import java.sql.*;
 import java.util.*;
-
+//this is modifed by rgunni333
 public class MyBean
 {
   public String uname="";
